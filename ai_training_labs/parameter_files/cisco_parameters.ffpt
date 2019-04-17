@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ParameterTree version="7.3.0.201903220921">
+    <parameters escape="true">
+        <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+            <expected_firmware pt:description="Expected firmware version of DUT">12.1(22)EA1</expected_firmware>
+        </parameters>
+    </parameters>
+</ParameterTree>

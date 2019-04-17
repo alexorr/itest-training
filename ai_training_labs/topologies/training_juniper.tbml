@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tbml xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.teslaalliance.org/trs/tbml/1.0/tbml-core.xsd" xmlns="http://www.teslaalliance.org/trs/tbml/1.0">
+  <header>
+    <name>training_juniper</name>
+    <description></description>
+    <property name="author">alex</property>
+    <property name="dateCreated">2019-04-03T12:35:42.871-07:00</property>
+    <property name="notes"/>
+    <property name="dateModified">2019-04-08T12:31:47.084-07:00</property>
+    <property name="creationTool" vendor="com.fnfr">com.fnfr.itest.topology.tbml.diagram</property>
+    <property name="creationToolVersion" vendor="com.fnfr">7.3.0.201903111007</property>
+  </header>
+  <body>
+    <resources>
+      <resource guid="28557d14-13d3-4c96-a8b6-572f74d24974" id="resource_0" type="switch">
+        <boundary height="100" width="100" x="349" y="167"/>
+        <property name="iconURI">platform:/plugin/com.fnfr.itest.topology.tbml.edit/icons/full/topology/switch_32.gif</property>
+        <property name="name">DUT</property>
+        <property name="inventoryName"/>
+        <extensions type="com.fnfr.itest.session" xs:namespace="com.fnfr.itest.session">
+          <session baseSessionProfile="" name="telnet" provider="com.fnfr">
+            <sessionProfile version="7.3.0.201903220921">
+              <baseApplication>com.fnfr.svt.applications.telnet</baseApplication>
+              <sessionProperties type="com.fnfr.svt.applications.telnet.documents.TelnetSessionProperties">
+                <ipAddress inherit="false">localhost</ipAddress>
+                <port inherit="false">46001</port>
+              </sessionProperties>
+              <baseProfile>project://di_junos/session_profiles/junos_telnet_base.ffsp</baseProfile>
+              <standalone>false</standalone>
+              <language>Python</language>
+            </sessionProfile>
+          </session>
+        </extensions>
+        <resource guid="dd3c701d-4a1c-4df5-9e8a-a0820b51dfba" id="resource_0_0" type="port">
+          <property name="name">prim_int</property>
+          <property name="inventoryName">ge-0/0/0</property>
+        </resource>
+      </resource>
+    </resources>
+    <connectivity/>
+  </body>
+  <illustration>
+    <layer/>
+  </illustration>
+</tbml>

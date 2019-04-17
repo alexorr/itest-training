@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<ResponseMap version="7.3.0.201903220921">
+    <sampleDictionary>
+        <item name="sample1">
+            <action actionType="command">
+                <command>
+                    <body>show version</body>
+                </command>
+            </action>
+            <responseBody>
+Cisco Internetwork Operating System Software
+IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA1, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2004 by cisco Systems, Inc.
+Compiled Mon 12-Jul-04 07:56 by madison
+Image text-base: 0x80010000, data-base: 0x80566000
+
+ROM: Bootstrap program is C2950 boot loader
+
+CiscoSwitch uptime is 1 hour, 3 minutes
+System returned to ROM by power-on
+System image file is &quot;flash:c2940-i6q4l2-mz.121-22.EA1.bin&quot;
+
+cisco WS-C2940-8TT-S (RC32300) processor (revision D0) with 20841K bytes of memory.
+Processor board ID FHK0846Z1DW
+Last reset from system-reset
+Running Standard Image
+8 FastEthernet/IEEE 802.3 interface(s)
+1 Gigabit Ethernet/IEEE 802.3 interface(s)
+The password-recovery mechanism is enabled.
+
+32K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address: 00:12:80:1A:36:00
+Motherboard assembly number: 73-8784-05
+Power supply part number: 341-0085-01
+Motherboard serial number: FOC08461J14
+Power supply serial number: HIC083301XF
+Model revision number: D0
+Motherboard revision number: A0
+Model number: WS-C2940-8TT-S
+System serial number: FHK0846Z1DW
+Configuration register is 0xF
+</responseBody>
+            <contentType>text</contentType>
+            <structuredData>
+&lt;structure xmlns:map=&quot;http://www.fnfr.com/svt/mapping&quot;&gt;
+    &lt;terminal RequiredForRendering=&quot;true&quot;&gt;
+        &lt;prompt&gt;ios-emu#&lt;/prompt&gt;
+        &lt;promptExtraction&gt;LAST_LINE&lt;/promptExtraction&gt;
+        &lt;echo&gt;show version&lt;/echo&gt;
+        &lt;connClosed/&gt;
+        &lt;idleTime&gt;1.251&lt;/idleTime&gt;
+        &lt;contentType&gt;text&lt;/contentType&gt;
+        &lt;terminator&gt;SLASH_R_SLASH_N&lt;/terminator&gt;
+    &lt;/terminal&gt;
+&lt;/structure&gt;
+</structuredData>
+            <aliases>
+                <item name="isEmpty">
+                    <queryFormatString>.//isEmpty</queryFormatString>
+                </item>
+                <item name="responseLine">
+                    <queryFormatString>.//responseLine</queryFormatString>
+                </item>
+            </aliases>
+            <duration>1.0</duration>
+        </item>
+    </sampleDictionary>
+    <mapperProperties>
+        <item type="com.fnfr.svt.mapping.regex.RegexMapperProperties">
+            <regexMaps>
+                <item name="pattern1">
+                    <groups>
+                        <item name="anchor0">
+                            <regex>IOS \\(tm\\)\\s+</regex>
+                            <start>0</start>
+                            <end>9</end>
+                        </item>
+                        <item name="IOS_tm">
+                            <regex>\\w+</regex>
+                            <named>true</named>
+                            <start>9</start>
+                            <end>14</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="\w+">one or more word characters</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor1">
+                            <regex>\\s+Software \\(</regex>
+                            <start>14</start>
+                            <end>25</end>
+                        </item>
+                        <item name="Software">
+                            <regex>\\S+</regex>
+                            <named>true</named>
+                            <start>25</start>
+                            <end>39</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name=".{14}">exactly 14 of any character</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor2">
+                            <regex>\\), Version\\s+</regex>
+                            <start>39</start>
+                            <end>50</end>
+                        </item>
+                        <item name="Version">
+                            <regex>\\S+</regex>
+                            <named>true</named>
+                            <start>50</start>
+                            <end>61</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name=".{11}">exactly 11 of any character</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor3">
+                            <regex>, RELEASE SOFTWARE \\(</regex>
+                            <start>61</start>
+                            <end>81</end>
+                        </item>
+                        <item name="RELEASE_SOFTWARE">
+                            <regex>\\w+</regex>
+                            <named>true</named>
+                            <start>81</start>
+                            <end>84</end>
+                            <suggestions>
+                                <item name=".+">one or more of any character</item>
+                                <item name="[^\r\n]+">one or more of any character except line endings</item>
+                                <item name="\S+">one or more non-whitespace characters</item>
+                                <item name="\w+">one or more word characters</item>
+                            </suggestions>
+                        </item>
+                        <item name="anchor4">
+                            <regex>\\)</regex>
+                            <start>84</start>
+                            <end>85</end>
+                        </item>
+                    </groups>
+                    <sampleMatch>IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA1, RELEASE SOFTWARE (fc1)</sampleMatch>
+                    <regexMapMode>Line</regexMapMode>
+                </item>
+            </regexMaps>
+        </item>
+    </mapperProperties>
+    <applicabilityProperties actionType="command" command="show version">
+        <application>
+            <item>com.fnfr.svt.applications.ssh</item>
+            <item>com.fnfr.svt.applications.telnet</item>
+        </application>
+    </applicabilityProperties>
+</ResponseMap>

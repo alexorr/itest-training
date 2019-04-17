@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<testCase version="7.3.0.201903220921">
+    <general>
+        <sessionClass includeTestCase="true" sessionType="junos_telnet_base.ffsp"/>
+        <language>Python</language>
+    </general>
+    <procedures>
+        <item name="main"/>
+        <item name="GetChassisInfo" isPublic="true" isVBlock="true">
+            <steps>
+                <item guid="c9c57e9d-0e09-4b74-9b54-7a1f5d1bdb08" action="command" session="[session]" normalOffset="4.298" estimatedStepExecutionTime="1.016">
+                    <command>
+                        <body>show chassis firmware</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>(mapped/Tabular/table1/table/row/Version)[1]</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>firmware_version</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="1.203" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+            </steps>
+            <response>{&quot;firmware_version&quot;:&quot;value&quot;}</response>
+        </item>
+        <item name="GetInterfaceStatus" isPublic="true" isVBlock="true">
+            <steps>
+                <item guid="c495740c-e864-4f04-adc9-71be5660cea1" action="command" session="[session]" normalOffset="9.2" estimatedStepExecutionTime="1">
+                    <command>
+                        <body>show interfaces brief [interface_name]</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>physical_status()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>link_status</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="1.516" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+            </steps>
+            <arguments>
+                <item name="interface_name">
+                    <description>Name of interface to get status on as seen on the Juniper device</description>
+                    <isMandatory>true</isMandatory>
+                </item>
+            </arguments>
+            <response>{&quot;admin_status&quot;:&quot;value&quot;,&quot;link_status&quot;:&quot;value&quot;}</response>
+        </item>
+        <item name="DisableInterface" isPublic="true">
+            <steps>
+                <item guid="12b3c57f-c0df-4634-8d76-d0feb029bd8e" action="command" session="[session]" estimatedStepExecutionTime="1.032">
+                    <command>
+                        <body>edit interfaces [interface_name]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="2.719" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+                <item guid="7347d4bc-75a3-424a-9942-4d3d4b6d22e7" action="command" session="[session]" normalOffset="5.734" estimatedStepExecutionTime="0.015">
+                    <command>
+                        <body>set disable</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="1.64" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+            </steps>
+            <arguments>
+                <item name="interface_name">
+                    <description>Name of interface to disable
+</description>
+                    <isMandatory>true</isMandatory>
+                </item>
+            </arguments>
+            <response>{}</response>
+        </item>
+        <item name="EnableInterface" isPublic="true">
+            <steps>
+                <item guid="fed19819-bf26-4440-a267-493db07cc11c" action="command" session="[session]" estimatedStepExecutionTime="1.032">
+                    <command>
+                        <body>edit interfaces [interface_name]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="2.719" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+                <item guid="12bda9ad-fc17-4870-8cae-e04ca2c53da5" action="command" session="[session]" normalOffset="4.798" estimatedStepExecutionTime="0.015">
+                    <command>
+                        <body>delete disable</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                        <completionProperties expectedIdleTime="0.562" expectedIdleTime.inherit="false"/>
+                    </applicationProperties>
+                </item>
+            </steps>
+            <arguments>
+                <item name="interface_name">
+                    <description>Name of interface to enable</description>
+                    <isMandatory>true</isMandatory>
+                </item>
+            </arguments>
+            <response>{}</response>
+        </item>
+    </procedures>
+</testCase>

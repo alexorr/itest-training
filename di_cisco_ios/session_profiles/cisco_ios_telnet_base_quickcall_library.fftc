@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<testCase version="7.3.0.201903220921">
+    <general>
+        <sessionClass includeTestCase="true" sessionType="project://di_cisco_ios/session_profiles/cisco_ios_telnet_base.ffsp"/>
+        <language>Python</language>
+    </general>
+    <procedures>
+        <item name="main"/>
+        <item name="GetChassisInfo" isPublic="true" isVBlock="true">
+            <steps>
+                <item guid="d08889c3-3fb3-4e7b-9d30-15ba8d55f67e" action="command" session="[session]" estimatedStepExecutionTime="1.016">
+                    <command>
+                        <body>show version</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>Version()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>var1</storageLocation>
+                                        <query>firmware_version</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+            </steps>
+            <response>{&quot;firmware_version&quot;:&quot;value&quot;}</response>
+        </item>
+        <item name="GetInterfaceStatus" isPublic="true" isVBlock="true">
+            <steps>
+                <item guid="0103faec-560e-44e2-8532-fa7c30afa27e" action="command" session="[session]" estimatedStepExecutionTime="1.016">
+                    <command>
+                        <body>show interfaces [interface_name]</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>link_status()</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>link_status</storageLocation>
+                                        <query>link_status</query>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="854b5e3d-f5e4-4010-952c-67d97090d83f" action="if" useFieldsInCommand="false">
+                    <command>
+                        <body>link_status == &quot;up&quot;:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="754a82f0-b2b0-4470-b487-57d0135203cf" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(&quot;Up&quot;)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>responseLine()</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>var1</storageLocation>
+                                                <query>link_status</query>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="dc38a5e9-38cd-475c-8dca-e7765de4eac7" action="else" useFieldsInCommand="false">
+                    <nestedSteps>
+                        <item guid="ddcdd3b1-5ad6-4438-b8df-9a1b5c71003a" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(&quot;Down&quot;)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>responseLine()</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>var1</storageLocation>
+                                                <query>link_status</query>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">true</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">false</variable>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="interface_name">
+                    <description>Name of interface to get status on as seen on the Juniper device</description>
+                    <isMandatory>true</isMandatory>
+                </item>
+            </arguments>
+            <response>{&quot;admin_status&quot;:&quot;value&quot;,&quot;link_status&quot;:&quot;value&quot;}</response>
+        </item>
+        <item name="DisableInterface" isPublic="true">
+            <steps>
+                <item guid="ab1cd2ad-132a-46ec-9acd-633025ddefb1" action="command" session="[session]">
+                    <command>
+                        <body>config t</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="95eecab9-7cd3-4ae8-8a04-8e7a8b67b2c2" action="command" session="[session]" normalOffset="6.687">
+                    <command>
+                        <body>interface [interface_name]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="59d3e0a6-e651-4394-a49e-2985769adc31" action="command" session="[session]" normalOffset="3.453">
+                    <command>
+                        <body>shutdown</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="4a95ef99-098e-40b0-a906-dbe081140df6" action="command" session="[session]" normalOffset="1.171">
+                    <command>
+                        <body>exit</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="interface_name">
+                    <description>Name of interface to disable
+</description>
+                    <isMandatory>true</isMandatory>
+                </item>
+            </arguments>
+            <response>{}</response>
+        </item>
+        <item name="EnableInterface" isPublic="true">
+            <steps>
+                <item guid="a788058d-cf4c-4425-86f3-c57940b66e86" action="command" session="[session]">
+                    <command>
+                        <body>config t</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="71a2655a-b6e1-4f91-a95d-fdb489993ee7" action="command" session="[session]" normalOffset="6.687">
+                    <command>
+                        <body>interface [interface_name]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="14727a85-85e2-49b2-b392-d3f44a36060c" action="command" session="[session]" normalOffset="2.953">
+                    <command>
+                        <body>no shutdown</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+                <item guid="db7a28c3-d9a8-4e2f-aea9-5a0482ac98ae" action="command" session="[session]" normalOffset="1.171">
+                    <command>
+                        <body>exit</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="interface_name">
+                    <description>Name of interface to enable</description>
+                    <isMandatory>true</isMandatory>
+                </item>
+            </arguments>
+            <response>{}</response>
+        </item>
+    </procedures>
+</testCase>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tbml xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.teslaalliance.org/trs/tbml/1.0/tbml-core.xsd" xmlns="http://www.teslaalliance.org/trs/tbml/1.0">
+  <header>
+    <name>training_cisco</name>
+    <description></description>
+    <property name="author">alex</property>
+    <property name="dateCreated">2019-04-10T10:16:16.044-07:00</property>
+    <property name="notes"/>
+    <property name="dateModified">2019-04-10T10:50:41.139-07:00</property>
+    <property name="creationTool" vendor="com.fnfr">com.fnfr.itest.topology.tbml.diagram</property>
+    <property name="creationToolVersion" vendor="com.fnfr">7.3.0.201903111007</property>
+  </header>
+  <body>
+    <resources>
+      <resource guid="85acbe3c-f6e5-4457-94ab-ba7ba5227dc7" id="resource_0" type="switch">
+        <boundary height="100" width="100" x="404" y="215"/>
+        <property name="iconURI">platform:/plugin/com.fnfr.itest.topology.tbml.edit/icons/full/topology/switch_32.gif</property>
+        <property name="name">DUT</property>
+        <property name="inventoryName"/>
+        <extensions type="com.fnfr.itest.session" xs:namespace="com.fnfr.itest.session">
+          <session baseSessionProfile="" name="telnet" provider="com.fnfr">
+            <sessionProfile version="7.3.0.201903220921">
+              <baseApplication>com.fnfr.svt.applications.telnet</baseApplication>
+              <sessionProperties type="com.fnfr.svt.applications.telnet.documents.TelnetSessionProperties">
+                <ipAddress inherit="false">localhost</ipAddress>
+                <port inherit="false">46002</port>
+              </sessionProperties>
+              <baseProfile>project://di_cisco_ios/session_profiles/cisco_ios_telnet_base.ffsp</baseProfile>
+              <standalone>false</standalone>
+              <language>Python</language>
+            </sessionProfile>
+          </session>
+        </extensions>
+        <resource guid="3978d7df-c020-4c9f-9ba4-58243a039fbd" id="resource_0_0" type="port">
+          <property name="name">prim_int</property>
+          <property name="inventoryName">GigabitEthernet1/0/0</property>
+        </resource>
+      </resource>
+    </resources>
+    <connectivity/>
+  </body>
+  <illustration>
+    <layer/>
+  </illustration>
+</tbml>

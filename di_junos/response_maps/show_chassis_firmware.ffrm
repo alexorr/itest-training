@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<ResponseMap version="7.3.0.201903220921">
+    <sampleDictionary>
+        <item name="sample1">
+            <action actionType="command">
+                <command>
+                    <body>show chassis firmware</body>
+                </command>
+            </action>
+            <responseBody>
+Part                     Type       Version
+FPC 0                    O/S        Version 10.2R3.10 by builder on 2010-10-16
+FWDD                     O/S        Version 10.2R3.10 by builder on 2010-10-16
+</responseBody>
+            <contentType>text</contentType>
+            <structuredData>
+&lt;structure xmlns:map=&quot;http://www.fnfr.com/svt/mapping&quot;&gt;
+    &lt;isEmpty&gt;false&lt;/isEmpty&gt;
+    &lt;responseLine/&gt;
+    &lt;promptName&gt;priv&lt;/promptName&gt;
+    &lt;echo&gt;show chassis firmware&lt;/echo&gt;
+    &lt;prompt&gt;training@junos-emu#&lt;/prompt&gt;
+&lt;/structure&gt;
+</structuredData>
+            <aliases>
+                <item name="isEmpty">
+                    <queryFormatString>.//isEmpty</queryFormatString>
+                </item>
+                <item name="responseLine">
+                    <queryFormatString>.//responseLine</queryFormatString>
+                </item>
+                <item name="promptName">
+                    <queryFormatString>.//promptName</queryFormatString>
+                </item>
+                <item name="echo">
+                    <queryFormatString>.//echo</queryFormatString>
+                </item>
+                <item name="prompt">
+                    <queryFormatString>.//prompt</queryFormatString>
+                </item>
+            </aliases>
+            <duration>1.2</duration>
+        </item>
+    </sampleDictionary>
+    <mapperProperties>
+        <item type="com.fnfr.svt.mapping.table.TabularMapperProperties">
+            <tabularMaps>
+                <item name="table1">
+                    <banner>Part                     Type      </banner>
+                    <bannerStructure>Wildcard</bannerStructure>
+                    <columnBoundaries>Positional</columnBoundaries>
+                    <columns>
+                        <item name="Part">
+                            <isKey>true</isKey>
+                            <width>25</width>
+                            <lastFullCell></lastFullCell>
+                            <uid>186ecc21-eb64-4ead-b115-bb63742c1233</uid>
+                        </item>
+                        <item name="Type">
+                            <width>11</width>
+                            <lastFullCell></lastFullCell>
+                            <uid>420999f0-49dd-4b33-98dd-9ec16e0621ea</uid>
+                        </item>
+                        <item name="Version">
+                            <width>0</width>
+                            <lastFullCell></lastFullCell>
+                            <uid>399759c3-3c8d-4cdb-8e13-d68aee73565f</uid>
+                        </item>
+                    </columns>
+                </item>
+            </tabularMaps>
+        </item>
+    </mapperProperties>
+    <applicabilityProperties actionType="command" command="show chassis firmware">
+        <application>
+            <item>com.fnfr.svt.applications.ssh</item>
+            <item>com.fnfr.svt.applications.telnet</item>
+        </application>
+    </applicabilityProperties>
+</ResponseMap>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<SessionTemplate version="7.3.0.201903220921">
+    <baseApplication>com.fnfr.svt.applications.telnet</baseApplication>
+    <sessionProperties type="com.fnfr.svt.applications.telnet.documents.TelnetSessionProperties">
+        <TerminalProperties>
+            <prompts merge="true">
+                <item name="prompt1" MatchMethod="WILDCARD">
+                    <Content>*#</Content>
+                </item>
+            </prompts>
+        </TerminalProperties>
+    </sessionProperties>
+    <responseLibrary inherit="false">project://di_cisco_ios/</responseLibrary>
+    <formMapLibrary inherit="false">project://di_cisco_ios/</formMapLibrary>
+    <sessionClassTestCase inherit="false">project://di_cisco_ios/session_profiles/cisco_ios_telnet_base_quickcall_library.fftc</sessionClassTestCase>
+    <isReferenceProfile>true</isReferenceProfile>
+    <language>Python</language>
+</SessionTemplate>

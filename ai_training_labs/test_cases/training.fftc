@@ -1,0 +1,299 @@
+<?xml version="1.0"?>
+<testCase version="7.3.0.201903220921">
+    <general>
+        <language>Python</language>
+    </general>
+    <execution>
+        <parameters version="7.3.0.201903220921">
+            <parameters escape="true">
+                <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+                    <shutdown pt:datatype="BOOLEAN" pt:description="Set to &apos;true&apos; to test shutting down and reenabling the interface">true</shutdown>
+                    <iterations pt:description="Number of times to shut down and reenable interface">1</iterations>
+                </parameters>
+            </parameters>
+        </parameters>
+    </execution>
+    <testbed>project://ai_training_labs/topologies/training_cisco.tbml</testbed>
+    <procedures>
+        <item name="main">
+            <steps>
+                <item guid="a63ef5ac-6ddb-4022-8c2d-d2243f2746a4" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Open Sessions</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="3939dca0-6cef-43ad-8157-aff527b9c698" action="open" session="DUT">
+                            <command>
+                                <body>device:DUT#telnet</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                                <stepProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                                <sessionProperties type="com.fnfr.svt.applications.telnet.documents.TelnetSessionProperties"/>
+                                <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="700647ea-2aac-44c5-9745-5696360f5d84" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Create variables</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="d567dce1-5e44-493e-8258-5fcdd2479007" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>prim_int_name = tbml(&apos;property&apos;, &apos;-name&apos;, &apos;DUT prim_int&apos;, &apos;inventoryName&apos;)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="cd4b2440-4407-4aa6-a034-3ec8ee183b8a" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Verify running firmware is expected version</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="959db07a-9c46-4a1e-8236-87ce9e107c83" action="GetChassisInfo" session="DUT" normalOffset="4.298" estimatedStepExecutionTime="1.016" useFieldsInCommand="false">
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>firmware_version()</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>value.find(param(&apos;expected_firmware&apos;)) != -1</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                            <message>DUT is running expected firmware version [param(&apos;expected_firmware&apos;)]</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                                <actionsWhenFalse>
+                                                    <item actionId="FailTest">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                            <message>DUT is running firmware version [value], expected [param(&apos;expected_firmware&apos;)]. Test will abort.</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                    <item actionId="AbortExecution">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                </actionsWhenFalse>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                                <completionProperties expectedIdleTime="1.203" expectedIdleTime.inherit="false"/>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="385d1053-7f00-4e91-8080-6f1407e51dcc" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Check primary interface and ensure that it is up</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="3af661ad-9583-472d-b51d-8f9ca234c08c" action="GetInterfaceStatus" session="DUT" normalOffset="9.2" estimatedStepExecutionTime="1" useFieldsInCommand="false">
+                            <command>
+                                <body> -interface_name [prim_int_name]</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>link_status()</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>(value == &quot;Up&quot;) | (value ==&quot;up&quot;)</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                            <message>Primary interface [prim_int_name] is up</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                                <actionsWhenFalse>
+                                                    <item actionId="FailTest">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                            <message>Primary interface [prim_int_name] is not up</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenFalse>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                                <completionProperties expectedIdleTime="1.516" expectedIdleTime.inherit="false"/>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="1454e86d-ec0d-46c6-a329-d428068ad6b5" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Shutdown and check interface</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="99002842-91a0-4f49-a55f-4c7e76505261" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>param(&apos;shutdown&apos;) == &apos;true&apos;:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="130b6a39-d811-4e98-b829-4e04e6421938" action="for" useFieldsInCommand="false">
+                                    <command>
+                                        <body>i in range(0, int(param(&apos;iterations&apos;))):</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="b306648e-2183-4adb-834e-e48039dff472" action="DisableInterface" session="DUT" estimatedStepExecutionTime="1.032" useFieldsInCommand="false">
+                                            <command>
+                                                <body> -interface_name [prim_int_name]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                                                <completionProperties expectedIdleTime="2.719" expectedIdleTime.inherit="false"/>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="d9959176-6072-4d7b-9c1b-97d313b923aa" action="GetInterfaceStatus" session="DUT" normalOffset="9.2" estimatedStepExecutionTime="1" useFieldsInCommand="false">
+                                            <command>
+                                                <body> -interface_name [prim_int_name]</body>
+                                            </command>
+                                            <postProcessing>
+                                                <analysisRules>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>link_status()</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="assert">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                <expression>value == &quot;Down&quot;</expression>
+                                                                <actionsWhenTrue>
+                                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                                            <message>Primary interface [prim_int_name] is down after shutting down interface</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                </actionsWhenTrue>
+                                                                <actionsWhenFalse>
+                                                                    <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                            <message>Primary interface [prim_int_name] did not go down after shutting down interface</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                </actionsWhenFalse>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                </analysisRules>
+                                            </postProcessing>
+                                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                                                <completionProperties expectedIdleTime="1.516" expectedIdleTime.inherit="false"/>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="9b73f87b-ff4f-4008-a508-19175bf0fd5f" action="EnableInterface" session="DUT" normalOffset="4.798" estimatedStepExecutionTime="0.015" useFieldsInCommand="false">
+                                            <command>
+                                                <body> -interface_name [prim_int_name]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                                                <completionProperties expectedIdleTime="0.562" expectedIdleTime.inherit="false"/>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="741bd271-e2cc-4a9f-b3b8-36fcdef56aa9" action="GetInterfaceStatus" session="DUT" normalOffset="9.2" estimatedStepExecutionTime="1" useFieldsInCommand="false">
+                                            <command>
+                                                <body> -interface_name [prim_int_name]</body>
+                                            </command>
+                                            <postProcessing>
+                                                <analysisRules>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>link_status()</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="assert">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                <expression>value == &quot;Up&quot;</expression>
+                                                                <actionsWhenTrue>
+                                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                                            <message>Primary interface [prim_int_name] is up after reenabling interface</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                </actionsWhenTrue>
+                                                                <actionsWhenFalse>
+                                                                    <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                            <message>Primary interface [prim_int_name] is not up after reenabling interface</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                </actionsWhenFalse>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                </analysisRules>
+                                            </postProcessing>
+                                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties">
+                                                <completionProperties expectedIdleTime="1.516" expectedIdleTime.inherit="false"/>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="9ace7427-6b82-4953-90e4-5539a3769c38" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Close sessions</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="376abce9-9a50-4a6f-9095-fe07f60750b3" action="close" session="DUT" normalOffset="4.279">
+                            <applicationProperties type="com.fnfr.svt.editors.terminal.documents.StepDefaultProperties"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+        </item>
+    </procedures>
+</testCase>
