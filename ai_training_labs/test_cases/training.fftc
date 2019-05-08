@@ -19,7 +19,7 @@
             <steps>
                 <item guid="a63ef5ac-6ddb-4022-8c2d-d2243f2746a4" action="comment" useFieldsInCommand="false">
                     <command>
-                        <body>Open Sessions</body>
+                        <body>Open Sessions conflict 1</body>
                     </command>
                     <nestedSteps>
                         <item guid="3939dca0-6cef-43ad-8157-aff527b9c698" action="open" session="DUT">
@@ -38,7 +38,7 @@
                 </item>
                 <item guid="700647ea-2aac-44c5-9745-5696360f5d84" action="comment" useFieldsInCommand="false">
                     <command>
-                        <body>Create variables###!!!</body>
+                        <body>Create variables###!!! Change 2</body>
                     </command>
                     <nestedSteps>
                         <item guid="d567dce1-5e44-493e-8258-5fcdd2479007" action="eval" useFieldsInCommand="false">
